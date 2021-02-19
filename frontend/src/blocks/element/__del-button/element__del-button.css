@@ -1,0 +1,10 @@
+.element__del-button{
+    position: absolute;
+    top:18px;
+    right: 15px;
+    cursor: pointer;
+    visibility: hidden;
+}
+.element__del-button:hover{
+    opacity: 0.6;
+}
