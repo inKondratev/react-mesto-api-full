@@ -9,6 +9,7 @@ const { login, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 const { celebrate, Joi, errors } = require("celebrate");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+const cors = require("cors");
 
 const app = express();
 
