@@ -22,7 +22,7 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useCreateIndex: true,
   useFindAndModify: false,
 });
-
+app.use(cors());
 app.post(
   "/signup",
   celebrate({
