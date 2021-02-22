@@ -56,8 +56,7 @@ const createUser = (req, res, next) => {
 };
 
 const updateUserProfile = (req, res, next) => {
-  const { id } = req.params;
-  const { name, about } = req.body;
+  const { name, about, id } = req.body;
   User.findByIdAndUpdate(
     id,
     { name, about },
