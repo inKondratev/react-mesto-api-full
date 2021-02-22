@@ -16,7 +16,7 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner: req.user._id })
+  Card.create({ name, link, owner:{ _id:req.user._id}, likes:[] })
     .then((card) => {
       if (!card) {
         throw new BadRequestError("Что то не так с запросом");
