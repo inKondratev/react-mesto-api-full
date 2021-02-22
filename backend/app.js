@@ -38,8 +38,8 @@ app.post(
   "/signin",
   celebrate({
     body: Joi.object().keys({
-      email: Joi.string().required().min(4).max(15),
-      password: Joi.string().required().min(6),
+      email: Joi.string().required().min(4).max(30),
+      password: Joi.string().required().min(6).max(15),
     }),
   }),
   login
