@@ -25,9 +25,7 @@ router.patch(
     body: Joi.object().keys({
       name: Joi.string().required().min(1).max(20),
       about: Joi.string().required().min(1).max(40),
-    }),
-    params: Joi.object().keys({
-      id: Joi.string().alphanum().length(),
+      id:Joi.string().required(),
     }),
   }),
 
