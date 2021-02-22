@@ -21,7 +21,14 @@ const createCard = (req, res, next) => {
       if (!card) {
         throw new BadRequestError("Что то не так с запросом");
       }
-      res.status(201).send({...card,owner:{_id:req.user._id},likes:[]});
+      res.status(201).send({
+        name: card.name,
+        link: card.link,
+        owner: {
+          _id: req.user._id,
+        },
+        likes: [],
+      });
     })
     .catch(next);
 };
