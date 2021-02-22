@@ -10,7 +10,7 @@ const getUsers = (req, res, next) => {
       if (!users) {
         throw new BadRequestError("Что-то не так с запросом");
       }
-      res.status(200).send({ data: users });
+      res.status(200).send({ users });
     })
     .catch(next);
 };
@@ -21,7 +21,7 @@ const getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("Пользователь не найден!");
       } else {
-        return res.status(200).send({ data: user });
+        return res.status(200).send({ user });
       }
     })
     .catch(next);
@@ -43,7 +43,7 @@ const createUser = (req, res, next) => {
                 if (!user) {
                   throw new BadRequestError("Что-то не так с запросом");
                 }
-                res.status(201).send({ data: user });
+                res.status(201).send({ user });
               })
               .catch(next);
           })
@@ -71,7 +71,7 @@ const updateUserProfile = (req, res, next) => {
       if (!user) {
         throw new BadRequestError("Что-то не так с запросом");
       } else {
-        return res.status(200).send({ data: user });
+        return res.status(200).send({ user });
       }
     })
     .catch(next);
@@ -93,7 +93,7 @@ const updateUserAvatar = (req, res, next) => {
       if (!user) {
         throw new BadRequestError("Что-то не так с запросом");
       } else {
-        return res.status(200).send({ data: user });
+        return res.status(200).send({ user });
       }
     })
     .catch(next);
@@ -121,7 +121,7 @@ const getMyData = (req, res, next) => {
       if (!user) {
         throw new NotFoundError("Пользователь не найден");
       }
-      res.status(200).send({ data: user });
+      res.status(200).send({ user });
     })
     .catch(next);
 };
