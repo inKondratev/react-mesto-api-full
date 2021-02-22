@@ -77,8 +77,7 @@ const updateUserProfile = (req, res, next) => {
 };
 
 const updateUserAvatar = (req, res, next) => {
-  const { id } = req.params;
-  const { avatar } = req.body;
+  const { avatar, id } = req.body;
   User.findByIdAndUpdate(
     id,
     { avatar },
