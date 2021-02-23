@@ -16,19 +16,12 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner:{ _id:req.user._id}, likes:[] })
+  Card.create({ name, link, owner:req.user._id })
     .then((card) => {
       if (!card) {
         throw new BadRequestError("Что то не так с запросом");
       }
-      res.status(201).send({
-        name: card.name,
-        link: card.link,
-        owner: {
-          _id: req.user._id,
-        },
-        likes: [],
-      });
+      res.status(201).send(res);
     })
     .catch(next);
 };
