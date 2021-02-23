@@ -27,12 +27,10 @@ const cardSchema = new mongoose.Schema({
       messege: "link error!",
     },
     owner:ownerSchema,
-    likes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
+    likes:{
+        type: [mongoose.Schema.Types.ObjectId],
         default: [],
       },
-    ],
     createdAt: {
       type: Date,
       default: Date.now,
