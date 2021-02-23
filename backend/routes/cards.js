@@ -23,7 +23,7 @@ router.delete(
   "/:id",
   celebrate({
     body: Joi.object().keys({
-      avatar: Joi.string().required().min(5),
+      id: Joi.string().required().min(5),
     }),
   }),
   deleteCard
