@@ -39,7 +39,7 @@ const deleteCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError("Карточка не найдена");
       } else {
-        return res.status(200).send({ data: card });
+        return res.status(200).send( card );
       }
     })
     .catch(next);
