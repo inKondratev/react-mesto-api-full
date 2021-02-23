@@ -16,15 +16,16 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner:{id:req.user._id} })
+  Card.create({ name, link, owner: req.user._id })
     .then((card) => {
       if (!card) {
         throw new BadRequestError("Что то не так с запросом");
       }
-      res.status(201).send(res);
+      res.status(201).send(card);
     })
     .catch(next);
 };
+
 const deleteCard = (req, res, next) => {
   const { id } = req.params;
   Card.findByIdAndRemove(id)
@@ -32,7 +33,7 @@ const deleteCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError("Карточка не найдена");
       } else {
-        return res.status(200).send( card );
+        return res.status(200).send(card);
       }
     })
     .catch(next);
