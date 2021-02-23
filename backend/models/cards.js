@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const ownerSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "user",
   },
 });
