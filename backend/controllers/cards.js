@@ -27,7 +27,7 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.body;
   Card.findByIdAndRemove(id)
     .then((card) => {
       if (!card) {
