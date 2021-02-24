@@ -44,7 +44,7 @@ const likeCard = (req, res, next) => {
 
   Card.findByIdAndUpdate(
     id,
-    { $addToSet: { likes: req.use_id } },
+    { $addToSet: { likes: req.user_id } },
     { new: true }
   )
     .then((card) => {
