@@ -47,6 +47,9 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user_id } },
     { new: true }
   )
+    .orFail((err)=>{
+      console.log(err);
+    })
     .then((card) => {
       if (!card) {
         throw new NotFoundError("Карточка не найдена");
@@ -54,7 +57,7 @@ const likeCard = (req, res, next) => {
         return res.status(200).send( card );
       }
     })
-    .catch(next);
+    // .catch(next);
 };
 
 const dislikeCard = (req, res) => {
