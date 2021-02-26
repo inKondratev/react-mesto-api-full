@@ -47,7 +47,6 @@ const likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user_id } },
     { new: true }
   )
-    .populate("likes")
     .then((card) => {
       if (!card) {
         throw new NotFoundError("Карточка не найдена");
@@ -64,7 +63,7 @@ const dislikeCard = (req, res) => {
     id,
     { $pull: { likes: req.user._id } },
     { new: true }
-  ) .populate("likes")
+  ) 
     .then((card) => {
       if (!card) {
         throw new NotFoundError("Карточка не найдена");
