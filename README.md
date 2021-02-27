@@ -1,1 +1,1 @@
-Deploy
+http://ikmst.students.nomoredomains.icu
