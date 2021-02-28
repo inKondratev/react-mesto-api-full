@@ -158,7 +158,7 @@ function App() {
   function handleUpdateUser(data) {
     const jwt = checkToken();
     api
-      .dispatchProfileInfo({ ...data, id: currentUser._id }, jwt)
+      .dispatchProfileInfo(data, jwt)
       .then((result) => {
         setCurrentUser({
           ...currentUser,
