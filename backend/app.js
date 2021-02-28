@@ -1,15 +1,15 @@
 const express = require("express");
-const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const { PORT = 3000 } = process.env;
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
-const { login, createUser } = require("./controllers/users");
+const signupRouter = require('./routes/signup');
+const signinRouter = require('./routes/signin');
 const auth = require("./middlewares/auth");
-const { celebrate, Joi, errors } = require("celebrate");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const cors = require("cors");
+const errorMiddlewares = require("./middlewares/checkErrors");
 
 const app = express();
 
@@ -22,28 +22,11 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true
 });
 app.use(cors());
-app.post(
-  "/signup",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().min(4).max(15),
-      password: Joi.string().required().min(6),
-    }),
-  }),
-  createUser
-);
-app.post(
-  "/signin",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().min(4).max(30),
-      password: Joi.string().required().min(6).max(15),
-    }),
-  }),
-  login
-);
+app.use("/", signupRouter)
+app.use("/", signinRouter)
 
 app.use(auth);
 
@@ -56,7 +39,7 @@ app.use("*", (req, res) => {
 
 app.use(errorLogger);
 
-app.use(errors());
+app.use(errorMiddlewares);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;

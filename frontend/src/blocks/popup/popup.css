@@ -1,0 +1,23 @@
+.popup{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.popup::before{
+    content:'';
+    opacity: 0.5;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}

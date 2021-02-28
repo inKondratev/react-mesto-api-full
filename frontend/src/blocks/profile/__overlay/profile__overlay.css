@@ -1,0 +1,16 @@
+.profile__overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color:black;
+    background-image: url(../../../images/iconEditAvatar.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    cursor: pointer;
+}
+.profile__overlay:hover{
+    opacity: 0.8;
+}

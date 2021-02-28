@@ -1,0 +1,9 @@
+.tooltip__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.popup__exit-button_tooltip{
+  left:350px;
+}
