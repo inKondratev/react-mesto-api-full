@@ -1,6 +1,7 @@
 const Card = require("../models/cards");
 const NotFoundError = require("../errors/notFoundError");
 const BadRequestError = require("../errors/badRequest");
+const Conflict = require("../errors/Conflict");
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -17,25 +18,44 @@ const createCard = (req, res, next) => {
     .then((card) => {
       res.status(201).send(card);
     })
-    .catch((err)=>{
-      if(err.name === "ValidationError"){
-        throw new BadRequestError(err)
-      }else{
-        next(err)
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        throw new BadRequestError(err);
+      } else {
+        next(err);
       }
     })
-    .catch(next)
+    .catch(next);
 };
 
 const deleteCard = (req, res, next) => {
   const { id } = req.params;
-  Card.findByIdAndRemove(id)
+  Card.findById(id)
     .then((card) => {
-      if (!card) {
-        throw new NotFoundError("Карточка не найдена");
+      if (card.owner._id == req.user._id) {
+        Card.findByIdAndRemove(id)
+          .then((card) => {
+            if (!card) {
+              throw new NotFoundError("Карточка не найдена");
+            } else {
+              return res.status(200).send(card);
+            }
+          })
+          .catch((err) => {
+            if (err.name === "CastError") {
+              throw new NotFoundError("Карточка не найдена");
+            }
+            next(err);
+          });
       } else {
-        return res.status(200).send(card);
+        throw new Conflict("Нельзя удалить чужую карточку");
       }
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new NotFoundError("Карточка не найдена");
+      }
+      next(err);
     })
     .catch(next);
 };
@@ -51,6 +71,11 @@ const likeCard = (req, res, next) => {
         return res.status(200).send(card);
       }
     })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new BadRequestError("Что-то не так с запросом");
+      }
+    })
     .catch(next);
 };
 
@@ -62,6 +87,11 @@ const dislikeCard = (req, res) => {
         throw new NotFoundError("Карточка не найдена");
       } else {
         return res.status(200).send(card);
+      }
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new BadRequestError("Что-то не так с запросом");
       }
     })
     .catch(next);

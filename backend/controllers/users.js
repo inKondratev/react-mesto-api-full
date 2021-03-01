@@ -68,6 +68,14 @@ const updateUserProfile = (req, res, next) => {
         return res.status(200).send({ user });
       }
     })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new BadRequestError("Что-то не так с запросом");
+      }
+      if (err.name === "ValidationError") {
+        throw new BadRequestError("Что-то не так с запросом");
+      }
+    })
     .catch(next);
 };
 
@@ -87,6 +95,14 @@ const updateUserAvatar = (req, res, next) => {
         throw new NotFoundError("Пользователь не найден");
       } else {
         return res.status(200).send({ user });
+      }
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new BadRequestError("Что-то не так с запросом");
+      }
+      if (err.name === "ValidationError") {
+        throw new BadRequestError("Что-то не так с запросом");
       }
     })
     .catch(next);
@@ -115,6 +131,11 @@ const getMyData = (req, res, next) => {
         throw new NotFoundError("Пользователь не найден");
       }
       res.status(200).send({ user });
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        throw new BadRequestError("Что-то не так с запросом");
+      }
     })
     .catch(next);
 };
