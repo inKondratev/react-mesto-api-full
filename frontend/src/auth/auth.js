@@ -1,4 +1,4 @@
-export const BASE_URL = "http://api.ikmst.students.nomoredomains.icu";
+export const BASE_URL = "https://api.ikmst.students.nomoredomains.icu";
 
 const checkResponse = (response) =>
   response.ok ? response.json() : Promise.reject("Ошибка на сервере");
