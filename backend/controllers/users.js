@@ -3,6 +3,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const NotFoundError = require("../errors/notFoundError");
 const BadRequestError = require("../errors/badRequest");
+const Unauthorized = require("../errors/unauthorized");
 const Conflict = require("../errors/Conflict");
 
 const getUsers = (req, res, next) => {
@@ -114,7 +115,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("Пользователь не найден");
+        throw new Unauthorized("Пользователь не найден");
       }
       const token = jwt.sign({ _id: user._id }, "some-secret-key", {
         expiresIn: "7d",
