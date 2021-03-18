@@ -10,6 +10,7 @@ const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const cors = require("cors");
 const errorMiddlewares = require("./middlewares/checkErrors");
+const NotFoundError = require("./errors/notFoundError");
 
 const app = express();
 
@@ -28,13 +29,12 @@ app.use(cors());
 app.use("/", signupRouter)
 app.use("/", signinRouter)
 
-app.use(auth);
 
-app.use("/users", usersRouter);
-app.use("/cards", cardsRouter);
+app.use("/users", auth, usersRouter);
+app.use("/cards", auth, cardsRouter);
 
 app.use("*", (req, res) => {
-  res.status(404).send({ message: "Запрашиваемый ресурс не найден" });
+  throw new NotFoundError("Запрашиваемый ресурс не найден");
 });
 
 app.use(errorLogger);
@@ -51,3 +51,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
