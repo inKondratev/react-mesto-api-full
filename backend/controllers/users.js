@@ -76,6 +76,7 @@ const updateUserProfile = (req, res, next) => {
       if (err.name === "ValidationError") {
         throw new BadRequestError("Что-то не так с запросом");
       }
+      next(err)
     })
     .catch(next);
 };
@@ -105,6 +106,7 @@ const updateUserAvatar = (req, res, next) => {
       if (err.name === "ValidationError") {
         throw new BadRequestError("Что-то не так с запросом");
       }
+      next(err);
     })
     .catch(next);
 };
