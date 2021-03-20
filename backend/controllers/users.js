@@ -5,6 +5,7 @@ const NotFoundError = require("../errors/notFoundError");
 const BadRequestError = require("../errors/badRequest");
 const Unauthorized = require("../errors/unauthorized");
 const Conflict = require("../errors/Conflict");
+const { JWT_SECRET='somesecretkey' } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -59,7 +60,6 @@ const updateUserProfile = (req, res, next) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     }
   )
     .then((user) => {
@@ -89,7 +89,6 @@ const updateUserAvatar = (req, res, next) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     }
   )
     .then((user) => {
@@ -119,7 +118,7 @@ const login = (req, res, next) => {
       if (!user) {
         throw new Unauthorized("Пользователь не найден");
       }
-      const token = jwt.sign({ _id: user._id }, "some-secret-key", {
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
       });
       res.send({ token });

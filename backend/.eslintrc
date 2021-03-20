@@ -1,4 +1,6 @@
 {
   "extends": "airbnb-base",
-  "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true } }]
+  "rules": {
+    "allow": "_id"
+  }
 }
