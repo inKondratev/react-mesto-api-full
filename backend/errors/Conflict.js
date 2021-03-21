@@ -4,5 +4,4 @@ class Conflict extends Error {
     this.statusCode = 409;
   }
 }
-
 module.exports = Conflict;

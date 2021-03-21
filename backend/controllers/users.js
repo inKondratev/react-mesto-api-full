@@ -1,11 +1,12 @@
-const User = require("../models/users");
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const NotFoundError = require("../errors/notFoundError");
-const BadRequestError = require("../errors/badRequest");
-const Unauthorized = require("../errors/unauthorized");
-const Conflict = require("../errors/Conflict");
-const { JWT_SECRET='somesecretkey' } = process.env;
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/users');
+const NotFoundError = require('../errors/notFoundError');
+const BadRequestError = require('../errors/badRequest');
+const Unauthorized = require('../errors/unauthorized');
+const Conflict = require('../errors/Conflict');
+
+const { JWT_SECRET = 'somesecretkey' } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -19,7 +20,7 @@ const getUser = (req, res, next) => {
   User.findById(id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("Пользователь не найден!");
+        throw new NotFoundError('Пользователь не найден!');
       } else {
         return res.status(200).send({ user });
       }
@@ -36,9 +37,10 @@ const createUser = (req, res, next) => {
           .hash(password, 10)
           .then((hash) => {
             if (!hash) {
-              throw new BadRequestError("Что-то не так с запросом");
+              throw new BadRequestError('Что-то не так с запросом');
             }
-            User.create({ email: email, password: hash })
+            User.create({ email, password: hash })
+              // eslint-disable-next-line no-shadow
               .then((user) => {
                 res.status(201).send({
                   user: {
@@ -54,7 +56,7 @@ const createUser = (req, res, next) => {
           })
           .catch(next);
       } else {
-        throw new Conflict("Пользователь уже создан");
+        throw new Conflict('Пользователь уже создан');
       }
     })
     .catch(next);
@@ -68,23 +70,23 @@ const updateUserProfile = (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   )
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("Пользователь не найден");
+        throw new NotFoundError('Пользователь не найден');
       } else {
         return res.status(200).send({ user });
       }
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        throw new BadRequestError("Что-то не так с запросом");
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Что-то не так с запросом');
       }
-      if (err.name === "ValidationError") {
-        throw new BadRequestError("Что-то не так с запросом");
+      if (err.name === 'ValidationError') {
+        throw new BadRequestError('Что-то не так с запросом');
       }
-      next(err)
+      next(err);
     })
     .catch(next);
 };
@@ -97,21 +99,21 @@ const updateUserAvatar = (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   )
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("Пользователь не найден");
+        throw new NotFoundError('Пользователь не найден');
       } else {
         return res.status(200).send({ user });
       }
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        throw new BadRequestError("Что-то не так с запросом");
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Что-то не так с запросом');
       }
-      if (err.name === "ValidationError") {
-        throw new BadRequestError("Что-то не так с запросом");
+      if (err.name === 'ValidationError') {
+        throw new BadRequestError('Что-то не так с запросом');
       }
       next(err);
     })
@@ -124,10 +126,10 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
-        throw new Unauthorized("Пользователь не найден");
+        throw new Unauthorized('Пользователь не найден');
       }
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: "7d",
+        expiresIn: '7d',
       });
       res.send({ token });
     })
@@ -138,13 +140,13 @@ const getMyData = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError("Пользователь не найден");
+        throw new NotFoundError('Пользователь не найден');
       }
       res.status(200).send({ user });
     })
     .catch((err) => {
-      if (err.name === "CastError") {
-        throw new BadRequestError("Что-то не так с запросом");
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Что-то не так с запросом');
       }
     })
     .catch(next);

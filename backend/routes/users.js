@@ -1,34 +1,35 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   getUsers,
   getUser,
   updateUserProfile,
   updateUserAvatar,
   getMyData,
-} = require("../controllers/users");
-const { celebrate, Joi } = require("celebrate");
+} = require('../controllers/users');
+// eslint-disable-next-line import/order
+const { celebrate, Joi } = require('celebrate');
 
 router.get(
-  "/",
+  '/',
   celebrate({
     params: Joi.object().keys({
       id: Joi.string().alphanum().length(24),
     }),
   }),
-  getUsers
+  getUsers,
 );
-router.get("/me", getMyData);
+router.get('/me', getMyData);
 router.get(
-  "/:id",
+  '/:id',
   celebrate({
     params: Joi.object().keys({
       id: Joi.string().alphanum().length(24),
     }),
   }),
-  getUser
+  getUser,
 );
 router.patch(
-  "/me",
+  '/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(1).max(20),
@@ -39,21 +40,21 @@ router.patch(
     }),
   }),
 
-  updateUserProfile
+  updateUserProfile,
 );
 router.patch(
-  "/me/avatar",
+  '/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string()
         .required()
         .min(5)
         .regex(
-          /https?\:\/\/[www\.]?[\w\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]*#?/
+          /https?:\/\/[www.]?[\w\-._~:/?#[\]@!$&'()*+,;=]*#?/,
         ),
     }),
   }),
-  updateUserAvatar
+  updateUserAvatar,
 );
 
 module.exports = router;
